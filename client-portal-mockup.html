@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ClearView Pro</title>
+  <style>
+    :root {
+      --primary-color: #7b68ee;
+      --primary-light: #9f92f7;
+      --secondary-color: #ff9500;
+      --green-color: #10b981;
+      --blue-color: #3b82f6;
+      --text-color: #1e293b;
+      --light-text: #64748b;
+      --border-color: #e2e8f0;
+      --bg-color: #eaeaeb;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0a0a0a 0%, #282828 100%);
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      border-radius: 1rem;
+      padding: 1rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-color);
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      color: var(--light-text);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .nav-item.active {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .user-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--light-text);
+      font-size: 1.2rem;
+    }
+
+    .profile {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #cbd5e1;
+      flex-shrink: 0;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-areas:
+        "funding calendar case"
+        "tasks tasks case";
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .dashboard-funding {
+      grid-area: funding;
+      min-height: 540px;
+    }
+
+    .dashboard-calendar {
+      grid-area: calendar;
+    }
+
+    .dashboard-case {
+      grid-area: case;
+    }
+
+    .dashboard-tasks {
+      grid-area: tasks;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard {
+        grid-template-areas:
+          "calendar"
+          "case"
+          "tasks"
+          "funding";
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .main-nav {
+        justify-content: flex-start;
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      width: 100%;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .dropdown {
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--light-text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stats-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      height: 200px;
+    }
+
+    .stat-circle {
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: absolute;
+    }
+
+    .stat-circle.large {
+      width: 150px;
+      height: 150px;
+      background-color: #121826;
+      z-index: 1;
+    }
+
+    .stat-circle.medium {
+      width: 125px;
+      height: 125px;
+      background-color: var(--primary-color);
+      left: 30px;
+      top: 50px;
+      z-index: 2;
+    }
+
+    .stat-circle.small {
+      width: 100px;
+      height: 100px;
+      background-color: var(--primary-light);
+      opacity: 0.8;
+      right: 30px;
+      top: 50px;
+      z-index: 3;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .calendar-header, .appointments, .case-details, .action-button {
+      margin-top: 1.5rem;
+    }
+    .funding-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .progress-chart {
+    position: relative;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 768px) {
+    .funding-progress {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  .funding-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .legend-dot.consumed {
+    background-color: var(--primary-color);
+  }
+  
+  .legend-dot.scheduled {
+    background-color: var(--blue-color);
+  }
+  
+  .legend-dot.available {
+    background-color: var(--green-color);
+  }
+  
+  .legend-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .legend-value {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+  }
+  
+  .legend-label {
+    color: var(--light-text);
+    font-size: 0.8rem;
+  }
+  
+  .legend-hours {
+    font-size: 0.75rem;
+    color: var(--light-text);
+    opacity: 0.8;
+  }
+  
+  .section-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+  }
+  
+  .trend-analysis {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mini-chart {
+    background-color: var(--bg-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    height: 120px;
+  }
+  
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 100%;
+  }
+  
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+  }
+  
+  .bar-group.active .bar-label {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+  
+  .bar-stack {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .bar {
+    width: 8px;
+    border-radius: 4px;
+    margin-bottom: 0.25rem;
+  }
+  
+  .bar.consumed {
+    background-color: var(--primary-color);
+  }
+  
+  .bar.scheduled {
+    background-color: var(--blue-color);
+  }
+  
+  .bar-label {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--light-text);
+  }
+  
+  .funding-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .action-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  
+  .action-button.primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .action-button.primary:hover {
+    background-color: var(--primary-light);
+  }
+  
+  .action-button.secondary {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .action-button.secondary:hover {
+    background-color: #d1d5db;
+  }
+  
+  .action-icon {
+    font-size: 1rem;
+  }
+  
+  /* Accessibility and interactive elements */
+  .action-button:focus, 
+  .dropdown:focus {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+  }
+  
+  /* Add subtle transitions and animations */
+  .progress-ring-consumed,
+  .progress-ring-scheduled,
+  .progress-ring-available {
+    transition: stroke-dashoffset 1s ease-in-out;
+  }
+  
+  /* Tooltip-style effects on hover */
+  .bar {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .bar:hover {
+    opacity: 0.8;
+  }
+  
+  /* Add responsive adjustments */
+  @media (max-width: 640px) {
+    .funding-actions {
+      flex-direction: column;
+    }
+    
+    .bar {
+      width: 6px;
+    }
+  }
+  .service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--bg-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.service-item:last-child {
+  border-bottom: none;
+}
+
+.service-name {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.service-details {
+  display: flex;
+  gap: 1.5rem;
+  text-align: right;
+}
+
+.service-hours, .service-percentage {
+  font-size: 0.875rem;
+  color: var(--light-text);
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">ClearView Pro</div>
+      <nav class="main-nav">
+        <a href="#" class="nav-item active">My Team</a>
+        <a href="#" class="nav-item">My Profile</a>
+        <a href="#" class="nav-item">Feedback</a>
+        <a href="#" class="nav-item">Settings</a>
+      </nav>
+      <div class="user-controls">
+        <button class="icon-button">🔍</button>
+        <button class="icon-button">🔔</button>
+        <button class="icon-button">✉️</button>
+        <div class="profile"><img src="/api/placeholder/40/40" alt="Profile"></div>
+      </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="card dashboard-funding">
+            <div class="card-header">
+              <h2 class="card-title">Funding</h2>
+              <div class="card-actions">
+                <select class="dropdown" aria-label="Select time period">
+                  <option>Current Month</option>
+                  <option>Last Month</option>
+                  <option>Quarter to Date</option>
+                  <option>Year to Date</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="funding-progress">
+              <div class="progress-chart">
+                <svg width="220" height="220" viewBox="0 0 220 220">
+                  <!-- Background circles -->
+                  <circle cx="110" cy="110" r="100" fill="none" stroke="#eaeaeb" stroke-width="15" />
+                  
+                  <!-- Available hours (green) -->
+                  <circle cx="110" cy="110" r="100" fill="none" stroke="#10b981" stroke-width="15" 
+                          stroke-dasharray="628" stroke-dashoffset="188.4" 
+                          transform="rotate(-90 110 110)" class="progress-ring-available" />
+                  
+                  <!-- Scheduled hours (blue) -->
+                  <circle cx="110" cy="110" r="100" fill="none" stroke="#3b82f6" stroke-width="15" 
+                          stroke-dasharray="628" stroke-dashoffset="314" 
+                          transform="rotate(-90 110 110)" class="progress-ring-scheduled" />
+                          
+                  <!-- Consumed hours (purple - primary color) -->
+                  <circle cx="110" cy="110" r="100" fill="none" stroke="#7b68ee" stroke-width="15" 
+                          stroke-dasharray="628" stroke-dashoffset="440" 
+                          transform="rotate(-90 110 110)" class="progress-ring-consumed" />
+                  
+                  <!-- Center text -->
+                  <text x="110" y="105" text-anchor="middle" class="progress-total" fill="#1e293b" font-size="24" font-weight="700">180</text>
+                  <text x="110" y="125" text-anchor="middle" class="progress-label" fill="#64748b" font-size="12">Total Hours</text>
+                </svg>
+              </div>
+              
+              <div class="funding-legend">
+                <div class="legend-item">
+                  <div class="legend-dot consumed"></div>
+                  <div class="legend-info">
+                    <div class="legend-value">30%</div>
+                    <div class="legend-label">Consumed</div>
+                    <div class="legend-hours">54 hours</div>
+                  </div>
+                </div>
+                
+                <div class="legend-item">
+                  <div class="legend-dot scheduled"></div>
+                  <div class="legend-info">
+                    <div class="legend-value">20%</div>
+                    <div class="legend-label">Scheduled</div>
+                    <div class="legend-hours">36 hours</div>
+                  </div>
+                </div>
+                
+                <div class="legend-item">
+                  <div class="legend-dot available"></div>
+                  <div class="legend-info">
+                    <div class="legend-value">50%</div>
+                    <div class="legend-label">Available</div>
+                    <div class="legend-hours">90 hours</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="trend-analysis">
+                <h3 class="section-title">Services Consumed</h3>
+                <div class="service-list">
+                  <div class="service-item">
+                    <div class="service-name">Speech Therapy</div>
+                    <div class="service-details">
+                      <div class="service-hours">20 hours</div>
+                      <div class="service-percentage">37%</div>
+                    </div>
+                  </div>
+                  <div class="service-item">
+                    <div class="service-name">Occupational Therapy</div>
+                    <div class="service-details">
+                      <div class="service-hours">15 hours</div>
+                      <div class="service-percentage">28%</div>
+                    </div>
+                  </div>
+                  <div class="service-item">
+                    <div class="service-name">Psychology</div>
+                    <div class="service-details">
+                      <div class="service-hours">10 hours</div>
+                      <div class="service-percentage">18%</div>
+                    </div>
+                  </div>
+                  <div class="service-item">
+                    <div class="service-name">Parent Coaching</div>
+                    <div class="service-details">
+                      <div class="service-hours">9 hours</div>
+                      <div class="service-percentage">17%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            
+            <div class="funding-actions">
+              <button class="action-button primary">
+                <span class="action-icon">📊</span>
+                <span>Detailed Report</span>
+              </button>
+              <button class="action-button secondary">
+                <span class="action-icon">⚙️</span>
+                <span>Adjust Budget</span>
+              </button>
+            </div>
+          </div>
+
+      <div class="dashboard-calendar card">
+        <div class="calendar-header">
+          <div class="month-selector">January 2025</div>
+        </div>
+        <div class="days-grid">
+          <!-- Calendar grid elements here -->
+        </div>
+        <div class="appointments">
+          <!-- Appointments list here -->
+        </div>
+      </div>
+
+      <div class="dashboard-case card">
+        <div class="case-image"><img src="/api/placeholder/400/150" alt="Case"></div>
+        <h3 class="case-title">Personal Injury Case</h3>
+        <div class="case-type">Type: Auto Accident</div>
+        <div class="case-details">
+          <div class="client-detail">
+            <div class="detail-label">Case number</div>
+            <div class="detail-value">PI-02</div>
+          </div>
+          <div class="client-detail">
+            <div class="detail-label">Case value</div>
+            <div class="detail-value">$50,000</div>
+          </div>
+          <div class="client-detail">
+            <div class="detail-label">Last updated</div>
+            <div class="detail-value">Jan 3, 2025</div>
+          </div>
+        </div>
+        <button class="action-button">Case details ➔</button>
+      </div>
+
+      <div class="dashboard-tasks card booking-card">
+        <div class="card-header">
+          <h2 class="card-title">Upcoming Tasks</h2>
+          <div class="dropdown">All tasks ▼</div>
+        </div>
+        <!-- Task list content here -->
+      </div>
+    </div>
+  </div>
+  <script>
+    // This script would normally be placed at the bottom of the document or in a separate JS file
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to animate the progress rings on load
+      const animateProgressRings = () => {
+        // Get the circles
+        const consumedRing = document.querySelector('.progress-ring-consumed');
+        const scheduledRing = document.querySelector('.progress-ring-scheduled');
+        const availableRing = document.querySelector('.progress-ring-available');
+        
+        // The full circumference of the circle
+        const circumference = 2 * Math.PI * 100;
+        
+        // Set initial values
+        consumedRing.style.strokeDasharray = `${circumference}`;
+        scheduledRing.style.strokeDasharray = `${circumference}`;
+        availableRing.style.strokeDasharray = `${circumference}`;
+        
+        // Set initial offsets to make the circles invisible
+        consumedRing.style.strokeDashoffset = `${circumference}`;
+        scheduledRing.style.strokeDashoffset = `${circumference}`;
+        availableRing.style.strokeDashoffset = `${circumference}`;
+        
+        // Calculate the offset values
+        const consumedOffset = circumference * 0.7; // 30% consumed = 70% offset
+        const scheduledOffset = circumference * 0.5; // 20% scheduled = 50% offset
+        const availableOffset = circumference * 0; // 50% available = 0% offset
+        
+        // Animate after a brief delay
+        setTimeout(() => {
+          consumedRing.style.strokeDashoffset = `${consumedOffset}`;
+          scheduledRing.style.strokeDashoffset = `${scheduledOffset}`;
+          availableRing.style.strokeDashoffset = `${availableOffset}`;
+        }, 300);
+      };
+      
+      // Call the animation function
+      animateProgressRings();
+      
+      // Add event listeners for interactive elements
+      document.querySelectorAll('.bar').forEach(bar => {
+        bar.addEventListener('mouseenter', function() {
+          const tooltip = document.createElement('div');
+          tooltip.className = 'tooltip';
+          tooltip.textContent = this.getAttribute('title');
+          tooltip.style.position = 'absolute';
+          tooltip.style.bottom = '100%';
+          tooltip.style.left = '50%';
+          tooltip.style.transform = 'translateX(-50%)';
+          tooltip.style.backgroundColor = 'rgba(0,0,0,0.8)';
+          tooltip.style.color = 'white';
+          tooltip.style.padding = '4px 8px';
+          tooltip.style.borderRadius = '4px';
+          tooltip.style.fontSize = '12px';
+          tooltip.style.zIndex = '10';
+          tooltip.style.whiteSpace = 'nowrap';
+          
+          this.appendChild(tooltip);
+        });
+        
+        bar.addEventListener('mouseleave', function() {
+          const tooltip = this.querySelector('.tooltip');
+          if (tooltip) tooltip.remove();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
