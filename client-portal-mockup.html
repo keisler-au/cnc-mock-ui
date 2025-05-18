@@ -497,6 +497,246 @@
   color: var(--light-text);
 }
 
+.trend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.service-item:last-child {
+  border-bottom: none;
+}
+
+.service-name {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.service-details {
+  display: flex;
+  gap: 1rem;
+  white-space: nowrap;
+  color: var(--light-text);
+  font-weight: 500;
+}
+
+.service-hours, .service-percentage {
+  text-align: right;
+}
+.dashboard-calendar {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .calendar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .month-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .month-text {
+      font-weight: 500;
+    }
+
+    .nav-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-text);
+    }
+
+    .nav-button:hover {
+      background-color: var(--bg-color);
+    }
+
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .weekday {
+      font-size: 0.75rem;
+      color: var(--light-text);
+      font-weight: 500;
+      padding: 0.5rem 0;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .day {
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: var(--text-color);
+    }
+
+    .day:hover:not(.empty, .selected) {
+      background-color: var(--bg-color);
+    }
+
+    .day.empty {
+      pointer-events: none;
+    }
+
+    .day.today {
+      font-weight: 700;
+      color: var(--blue-color);
+    }
+
+    .day.selected {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+    }
+
+    .day.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      width: 4px;
+      height: 4px;
+      background-color: var(--secondary-color);
+      border-radius: 50%;
+    }
+
+    .appointments {
+      margin-top: auto;
+    }
+
+    .appointments-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .appointments-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .view-all {
+      font-size: 0.75rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .appointment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .appointment {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .appointment:hover {
+      background-color: var(--bg-color);
+    }
+
+    .appointment-indicator {
+      width: 4px;
+      height: 40px;
+      background-color: var(--primary-light);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .appointment-content {
+      flex: 1;
+    }
+
+    .appointment-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .appointment-details {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--light-text);
+    }
+
+    .appointment-actions {
+      color: var(--light-text);
+      cursor: pointer;
+    }
+
+    .dot-separator {
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .weekday {
+        font-size: 0.7rem;
+      }
+      
+      .day {
+        font-size: 0.8rem;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -521,14 +761,6 @@
         <div class="card dashboard-funding">
             <div class="card-header">
               <h2 class="card-title">Funding</h2>
-              <div class="card-actions">
-                <select class="dropdown" aria-label="Select time period">
-                  <option>Current Month</option>
-                  <option>Last Month</option>
-                  <option>Quarter to Date</option>
-                  <option>Year to Date</option>
-                </select>
-              </div>
             </div>
             
             <div class="funding-progress">
@@ -589,38 +821,20 @@
             </div>
             
             <div class="trend-analysis">
+              <div class="trend-header">
                 <h3 class="section-title">Services Consumed</h3>
-                <div class="service-list">
-                  <div class="service-item">
-                    <div class="service-name">Speech Therapy</div>
-                    <div class="service-details">
-                      <div class="service-hours">20 hours</div>
-                      <div class="service-percentage">37%</div>
-                    </div>
-                  </div>
-                  <div class="service-item">
-                    <div class="service-name">Occupational Therapy</div>
-                    <div class="service-details">
-                      <div class="service-hours">15 hours</div>
-                      <div class="service-percentage">28%</div>
-                    </div>
-                  </div>
-                  <div class="service-item">
-                    <div class="service-name">Psychology</div>
-                    <div class="service-details">
-                      <div class="service-hours">10 hours</div>
-                      <div class="service-percentage">18%</div>
-                    </div>
-                  </div>
-                  <div class="service-item">
-                    <div class="service-name">Parent Coaching</div>
-                    <div class="service-details">
-                      <div class="service-hours">9 hours</div>
-                      <div class="service-percentage">17%</div>
-                    </div>
-                  </div>
-                </div>
+                <select class="dropdown service-dropdown" aria-label="Select time period">
+                  <option value="current">Current Month</option>
+                  <option value="last">Last Month</option>
+                  <option value="ytd">Year to Date</option>
+                </select>
               </div>
+            
+              <div class="service-list" id="serviceList">
+                <!-- Dynamic service cards inserted here -->
+              </div>
+            </div>
+            
               
             
             <div class="funding-actions">
@@ -635,17 +849,83 @@
             </div>
           </div>
 
-      <div class="dashboard-calendar card">
-        <div class="calendar-header">
-          <div class="month-selector">January 2025</div>
-        </div>
-        <div class="days-grid">
-          <!-- Calendar grid elements here -->
-        </div>
-        <div class="appointments">
-          <!-- Appointments list here -->
-        </div>
-      </div>
+          <div class="dashboard-calendar card">
+            <div class="calendar-header">
+              <h2 class="calendar-title">Calendar</h2>
+              <div class="month-selector">
+                <button class="nav-button" id="prevMonth">
+                  &#10094;
+                </button>
+                <span class="month-text" id="currentMonth">May 2025</span>
+                <button class="nav-button" id="nextMonth">
+                  &#10095;
+                </button>
+              </div>
+            </div>
+        
+            <div class="weekdays">
+              <div class="weekday">S</div>
+              <div class="weekday">M</div>
+              <div class="weekday">T</div>
+              <div class="weekday">W</div>
+              <div class="weekday">T</div>
+              <div class="weekday">F</div>
+              <div class="weekday">S</div>
+            </div>
+        
+            <div class="days-grid" id="daysGrid">
+              <!-- Calendar days will be generated by JavaScript -->
+            </div>
+        
+            <div class="appointments">
+              <div class="appointments-header">
+                <h3 class="appointments-title">Appointments</h3>
+                <div class="view-all">View All</div>
+              </div>
+        
+              <div class="appointment-list">
+                <div class="appointment">
+                  <div class="appointment-indicator"></div>
+                  <div class="appointment-content">
+                    <div class="appointment-title">Client Meeting</div>
+                    <div class="appointment-details">
+                      <span>9:00 AM</span>
+                      <span class="dot-separator">•</span>
+                      <span>Meeting</span>
+                    </div>
+                  </div>
+                  <div class="appointment-actions">•••</div>
+                </div>
+        
+                <div class="appointment">
+                  <div class="appointment-indicator"></div>
+                  <div class="appointment-content">
+                    <div class="appointment-title">Case Review</div>
+                    <div class="appointment-details">
+                      <span>1:30 PM</span>
+                      <span class="dot-separator">•</span>
+                      <span>Internal</span>
+                    </div>
+                  </div>
+                  <div class="appointment-actions">•••</div>
+                </div>
+        
+                <div class="appointment">
+                  <div class="appointment-indicator"></div>
+                  <div class="appointment-content">
+                    <div class="appointment-title">Document Filing</div>
+                    <div class="appointment-details">
+                      <span>3:00 PM</span>
+                      <span class="dot-separator">•</span>
+                      <span>Task</span>
+                    </div>
+                  </div>
+                  <div class="appointment-actions">•••</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
 
       <div class="dashboard-case card">
         <div class="case-image"><img src="/api/placeholder/400/150" alt="Case"></div>
@@ -744,5 +1024,161 @@
       });
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const serviceData = {
+        current: [
+          { name: 'Speech Therapy', hours: 20, percentage: '37%' },
+          { name: 'Occupational Therapy', hours: 15, percentage: '28%' },
+          { name: 'Psychology', hours: 10, percentage: '18%' },
+          { name: 'Parent Coaching', hours: 9, percentage: '17%' },
+        ],
+        last: [
+          { name: 'Speech Therapy', hours: 18, percentage: '35%' },
+          { name: 'Occupational Therapy', hours: 12, percentage: '23%' },
+          { name: 'Behavioural Support', hours: 14, percentage: '27%' },
+          { name: 'Parent Coaching', hours: 7, percentage: '15%' },
+        ],
+        ytd: [
+          { name: 'Speech Therapy', hours: 120, percentage: '34%' },
+          { name: 'Occupational Therapy', hours: 100, percentage: '28%' },
+          { name: 'Psychology', hours: 80, percentage: '22%' },
+          { name: 'Parent Coaching', hours: 50, percentage: '16%' },
+        ]
+      };
+  
+      const dropdown = document.querySelector('.service-dropdown');
+      const serviceList = document.getElementById('serviceList');
+  
+      function renderServices(period) {
+        serviceList.innerHTML = '';
+        serviceData[period].forEach(service => {
+          const item = document.createElement('div');
+          item.className = 'service-item';
+          item.innerHTML = `
+            <div class="service-name">${service.name}</div>
+            <div class="service-details">
+              <div class="service-hours">${service.hours} hours</div>
+              <div class="service-percentage">${service.percentage}</div>
+            </div>
+          `;
+          serviceList.appendChild(item);
+        });
+      }
+  
+      // Initialize
+      renderServices('current');
+  
+      // Update on dropdown change
+      dropdown.addEventListener('change', (e) => {
+        renderServices(e.target.value);
+      });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Calendar functionality
+      const daysGrid = document.getElementById('daysGrid');
+      const monthDisplay = document.getElementById('currentMonth');
+      const prevMonthBtn = document.getElementById('prevMonth');
+      const nextMonthBtn = document.getElementById('nextMonth');
+      
+      // Set initial date
+      let currentDate = new Date();
+      let selectedDate = new Date();
+      
+      // Event dates - days with appointments
+      const eventDates = [5, 12, 15, 20, 25];
+      
+      // Month names
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June', 
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      
+      // Generate calendar
+      function generateCalendar() {
+        // Clear previous days
+        daysGrid.innerHTML = '';
+        
+        // Update month display
+        monthDisplay.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        
+        // Get first day of the month
+        const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        // Get last day of the month
+        const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        
+        // Get day of week for first day (0 = Sunday, 6 = Saturday)
+        const startDayOfWeek = firstDay.getDay();
+        
+        // Total days in month
+        const daysInMonth = lastDay.getDate();
+        
+        // Add empty cells for days before the first day of month
+        for (let i = 0; i < startDayOfWeek; i++) {
+          const emptyDay = document.createElement('div');
+          emptyDay.className = 'day empty';
+          daysGrid.appendChild(emptyDay);
+        }
+        
+        // Add days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'day';
+          dayElement.textContent = day;
+          
+          // Check if it's today
+          const currentDateCheck = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+          const today = new Date();
+          if (currentDateCheck.toDateString() === today.toDateString()) {
+            dayElement.classList.add('today');
+          }
+          
+          // Check if it's selected date
+          if (currentDateCheck.toDateString() === selectedDate.toDateString()) {
+            dayElement.classList.add('selected');
+          }
+          
+          // Check if day has an event
+          if (eventDates.includes(day)) {
+            dayElement.classList.add('has-event');
+          }
+          
+          // Add click event to select date
+          dayElement.addEventListener('click', function() {
+            // Remove selected class from all days
+            document.querySelectorAll('.day').forEach(day => {
+              day.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked day
+            this.classList.add('selected');
+            
+            // Update selected date
+            selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+          });
+          
+          daysGrid.appendChild(dayElement);
+        }
+      }
+      
+      // Initialize calendar
+      generateCalendar();
+      
+      // Previous month button
+      prevMonthBtn.addEventListener('click', function() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        generateCalendar();
+      });
+      
+      // Next month button
+      nextMonthBtn.addEventListener('click', function() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        generateCalendar();
+      });
+    });
+  </script>
+  
 </body>
 </html>
