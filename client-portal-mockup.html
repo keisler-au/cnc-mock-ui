@@ -31,12 +31,12 @@
     }
 
     body {
-      background: linear-gradient(145deg, #0a0a0a 0%, #282828 100%);
       min-height: 100vh;
       padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      background-image: url('dark-keyboard.jpg');
     }
 
     .container {
@@ -251,7 +251,7 @@
       opacity: 0.8;
     }
 
-    .calendar-header, .appointments, .case-details, .action-button {
+  .appointments, .case-details, .action-button {
       margin-top: 1.5rem;
     }
     .funding-progress {
@@ -1156,7 +1156,6 @@
     }
   }
   .card-icon {
-  position: absolute;
   top: 1rem;
   right: 1rem;
   width: 20px; /* Adjust size as needed */
@@ -1188,6 +1187,11 @@
         <div class="card dashboard-funding">
             <div class="card-header">
               <h2 class="card-title">Funding</h2>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1" />
+                <path d="M8 16L16 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10 8H16V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </div>
             
             <div class="funding-progress">
@@ -1265,7 +1269,8 @@
 
           <div class="dashboard-calendar card">
             <div class="calendar-header">
-              <h2 class="calendar-title">Calendar</h2>
+              
+              <div style="display: flex; align-items: center; justify-content: space-between;"><h2 class="calendar-title">Calendar</h2>
               <div class="month-selector">
                 <button class="nav-button" id="prevMonth">
                   &#10094;
@@ -1275,6 +1280,12 @@
                   &#10095;
                 </button>
               </div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1" />
+                <path d="M8 16L16 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10 8H16V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </div>
         
             <div class="weekdays">
@@ -1344,6 +1355,11 @@
           <div class="dashboard-documents card">
             <div class="documents-header">
               <h2 class="documents-title">Documents</h2>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1" />
+                <path d="M8 16L16 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10 8H16V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </div>
         
             <div class="search-container">
@@ -1372,10 +1388,10 @@
           <div class="dashboard-tasks card">
             <div class="card-header">
               <h2 class="card-title">Upcoming Tasks</h2>
-              <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" stroke="#1e293b" fill="none"/>
-                <polyline points="10 14 14 10" />
-                <line x1="10" y1="10" x2="14" y2="10" />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1" />
+                <path d="M8 16L16 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10 8H16V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               
             </div>
